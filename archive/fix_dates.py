@@ -1,12 +1,12 @@
+# This script was used to change the name of the pictures I had taken of the
+# the plants on the first few days.
+
 import os
 
 day = '0602'
 time = ['0800]', '1000', '1200', '1400', '1600']
 type = ['front', 'top']
 vi   = ['', 'visualize_ir']
-
-
-#dir = '0800/top/visualize_ir/'
 
 for t in time:
     for y in type:
