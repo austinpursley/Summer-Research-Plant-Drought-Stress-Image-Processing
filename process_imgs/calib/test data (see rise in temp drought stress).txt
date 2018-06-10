@@ -1,0 +1,17 @@
+0602130000_IR_IMG_0006_top.pgm
+min:  8117
+max:  8245
+plant average:  8135.073863636364
+F degree plant:  72.78497407562473
+
+0604131340_IR_IMG_0006_top.pgm
+min:  8152
+max:  8241
+plant average: 8168.396200814112
+F degree plant:  75.1992853742739
+
+0607135153_IR_IMG_0006_top.pgm
+min:  8162
+max:  8254
+plant average:  8172.444183313749
+F degree plant:  75.48990751322349
