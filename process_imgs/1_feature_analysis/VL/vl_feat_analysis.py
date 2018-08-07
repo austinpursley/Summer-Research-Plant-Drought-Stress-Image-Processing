@@ -55,6 +55,7 @@ for file in os.listdir(dir):
 
 feat_type1 = ['Mean', 'Variance']
 feat_type2 = ['mean', 'vari']
+p_cond = ""
 p_type = ""
 for t in range(0,2):
     for p in range(0,6):
@@ -65,10 +66,18 @@ for t in range(0,2):
         if t == 1:
             y = array(var_hue[p])
         z = np.polyfit(x, y, 1)
+        # Plant condition
         if (p==0) | (p==1) | (p==2):
-            p_type = "(Watered)"
+            p_cond = "Watered"
         elif (p==3) | (p==4) | (p==5):
-            p_type = "(Dry)"
+            p_cond = "Drought-stressed"
+        # Plant type / species
+        if (p==0) | (p==4):
+            p_type = "type 1"
+        elif (p==2) | (p==5):
+            p_type = "type 2"
+        elif (p==2) | (p==5):
+            p_type = "type 3"
         # Calculate the r correlation coefficient
         r_mat = np.corrcoef(x, y)
         r = r_mat[0][1]
@@ -76,15 +85,15 @@ for t in range(0,2):
         # Plot
         plt.plot(x, y, marker='o', linestyle='None')
         plt.plot(x, z[1]+z[0]*x, linestyle='dashed')
-        plt.title("VL Hue " + feat_type1[t] + " Plant " + str(p + 1) + " " + p_type + "\n" + r_text)
+        plt.title("VL Hue " + feat_type1[t] + ", Plant " + p_type + ", " + p_cond + "\n" + r_text)
         plt.xlabel("Time (Hours)")
         plt.ylabel("Hue " + feat_type1[t])
-        plt.savefig("VL_hue_" + feat_type2[t] + "_plant" + str(p + 1) + "_" + p_type + ".png")
+        plt.savefig("VL_hue_" + feat_type2[t] + "_plant" + p_type + "_" + p_cond + ".png")
         # # Print equation onto plot
         # eq = "y=%.4fx+%.4f" %(z[0], z[1])
         # poly_z = np.poly1d(z)
         # x_text = np.amin(x) - (np.amax(x) - np.amin(x))*0.01
         # y_text = poly_z(25) + - (np.amax(y) - np.amin(y))*0.10
         # plt.annotate(eq, xy = (35,poly_z(35)), xytext=(x_text,y_text),  arrowprops=dict(facecolor='black', shrink=0.025), bbox={'facecolor':'white'})
-        print("Plant " + str(p + 1) + " " + feat_type1[t] + " Correlation: " + str(r)) + p_type
+        print("Plant " + str(p + 1) + " " + feat_type1[t] + " Correlation: " + str(r)) + p_cond
         plt.close()

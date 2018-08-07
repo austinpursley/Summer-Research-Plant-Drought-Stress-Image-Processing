@@ -43,7 +43,6 @@ for file in os.listdir(dir):
         variance = (std[0][0]) ** 2
         back_mean = cv.mean(Fdegree_img, not_mask)
         mean_diff = back_mean - mean[0][0]
-
         avg[p].append(mean[0][0])
         var[p].append(variance)
         dif[p].append(mean_diff[0])
@@ -58,11 +57,11 @@ for file in os.listdir(dir):
 feat_type1 = ['Mean', 'Variance', 'Mean Difference']
 feat_type2 = ['mean', 'vari', 'diffmean']
 p_type = ""
+p_cond = ""
 for t in range(0,3):
     for p in range(0,6):
         # Set x and y axes
         x = array(hours[p])
-
         if t == 0:
             y = array(avg[p])
         if t == 1:
@@ -70,10 +69,18 @@ for t in range(0,3):
         if t == 2:
             y = array(dif[p])
         z = np.polyfit(x, y, 1)
-        if (p==0) | (p==1) | (p==2):
-            p_type = "(Watered)"
-        elif (p==3) | (p==4) | (p==5):
-            p_type = "(Dry)"
+        # Plant condition
+        if (p == 0) | (p == 1) | (p == 2):
+            p_cond = "Watered"
+        elif (p == 3) | (p == 4) | (p == 5):
+            p_cond = "Drought-stressed"
+        # Plant type / species
+        if (p == 0) | (p == 4):
+            p_type = "type 1"
+        elif (p == 2) | (p == 5):
+            p_type = "type 2"
+        elif (p == 2) | (p == 5):
+            p_type = "type 3"
         # Calculate the r correlation coefficient
         r_mat = np.corrcoef(x, y)
         r = r_mat[0][1]
@@ -81,9 +88,9 @@ for t in range(0,3):
         # Plot
         plt.plot(x, y, marker='o', linestyle='None')
         plt.plot(x, z[1]+z[0]*x, linestyle='dashed')
-        plt.title(" Plant " + str(p + 1) + " IR " + feat_type1[t] + " " + p_type + "\n" + r_text)
+        plt.title("IR Hue " + feat_type1[t] + ", Plant " + p_type + ", " + p_cond + "\n" + r_text)
         plt.xlabel("Time (Hours)")
         plt.ylabel("Thermal " + feat_type1[t])
-        plt.savefig("IR_hue_" + feat_type2[t] + "_plant" + str(p + 1) + "_" + p_type + ".png")
+        plt.savefig("VL_hue_" + feat_type2[t] + "_plant" + p_type + "_" + p_cond + ".png")
         print("Plant " + str(p + 1) + " " + feat_type1[t] + " Correlation: " + str(r)) + p_type
         plt.close()

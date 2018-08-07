@@ -1,3 +1,9 @@
+# capture_imgs.py
+# Austin Pursley
+# 6/6/2018
+# This script was used for imaging plants for a summer research project.
+# Takes a single image and ends
+
 import os
 import time
 import datetime
@@ -7,8 +13,6 @@ from subprocess import call
 
 import cv2 as cv
 import numpy as np
-
-
 
 time = datetime.datetime.now().strftime("%m%d%H%M%S")
 
