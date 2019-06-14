@@ -21,12 +21,12 @@ from subprocess import call
 import cv2 as cv
 import numpy as np
 
-#Verify the time is updated / correct
+#See if the time is updated / correct
 print "Time is ", datetime.datetime.now()
 # Show both images
 camera = PiCamera()
 camera.resolution = (1024, 768)
-# Flip because camera is upside down (won't have to flip images later)
+# Flip because camera is upside down on my setup
 camera.vflip = True
 camera.hflip = True
 # Preview if you have a monitor
@@ -34,6 +34,7 @@ camera.start_preview()
 # Camera warm-up time
 sleep(2)
 program_run = True
+# Loop to capture more than one set of images
 while(program_run):
   print "Capturing images..."
   # Capture the visible light image
@@ -53,14 +54,16 @@ while(program_run):
   new_ir_img_name  = timestamp + "_IR_IMG_%04d.pgm" % (i+1)
   os.rename(ir_img_name, new_ir_img_name)
   ir_img_name = new_ir_img_name
+  # read VL and IR images with OpenCV
   ir_img = cv.imread(ir_img_name, -1)
   vl_img = cv.imread(vl_img_name, -1)
-  # For visualization, create normalized, larger thermal image
+  # 80x60 thermal image is hard to see: create normalized, larger image to help
   norm_ir = np.zeros((60, 80))
   norm_ir = cv.normalize(ir_img, norm_ir, 255, 0, cv.NORM_MINMAX, dtype=cv.CV_8U)
   norm_ir_resize = cv.resize(norm_ir, (0,0), fx=10, fy=10, interpolation = cv.INTER_NEAREST)
   vis_ir_dir = "visualize_ir/" + os.path.splitext(ir_img_name)[0] + ".jpg"
   cv.imwrite(vis_ir_dir, norm_ir_resize)
+  # Make some windows to view our newly captured images
   # This window is called to make sure two images windows are activated.
   cv.namedWindow("GetFocus", cv.WINDOW_NORMAL)
   img = np.zeros((60, 80))
@@ -87,6 +90,7 @@ while(program_run):
   cv.waitKey(1)
   cv.waitKey(1)
   cv.waitKey(1)
+  # Get user input for next action
   # Capture will take another set of images
   # Discard will delete previous images and take another set
   # Quit will exit the program
@@ -106,5 +110,6 @@ while(program_run):
       elif k == 'q':
             program_run = False
             break
+#loop exited, end program
 camera.close()
 print "ending program..."
