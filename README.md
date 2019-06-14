@@ -1,0 +1,2 @@
+# Summer-Research-Plant-Drought-Stress-Image-Processing
+A 2018 summer research project with Proffesor Qian at Texas A&M University that involved gathering visible light and infrared images of plants and image processing of that data. The plant images were gathered over the course of a week with VL and IR cameras hooked-up to a Raspberry Pi. The image capturing / automation tool was developed in Python. The image process processing was also done in Python + the OpenCV library.
