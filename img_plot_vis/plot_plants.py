@@ -1,4 +1,4 @@
-# ir_crop.py
+# plant_plants.py
 # Austin Pursley
 # 7/20/2018
 # Juypter notebook to illustrate plant image data
@@ -12,7 +12,7 @@ from matplotlib import pyplot as plt
 
 # Grab files
 # Note: this was set up in quick way with copy and pasting images into "set" 
-#       folders. Smarter solution would of been images beng in database. Also,
+#       folders. Smarter solution would of been images being in database. Also,
 #       most of the image data is encoded in image names so that could of also
 #       been utilized to select desired set of images.
 files = []
